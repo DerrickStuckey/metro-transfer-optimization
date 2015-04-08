@@ -40,6 +40,13 @@ def get_station_lines(station_line_positions):
     lines = [line for line in station_line_positions.keys() if station_line_positions[line]!='']
     return set(lines)
 
+def number_of_stops(start_station, end_station, line, line_positions):
+    start_pos = line_positions[start_station][line]
+    end_pos = line_positions[end_station][line]
+    print "start_pos: ", start_pos
+    print "end_pos: ", end_pos
+    return abs(int(end_pos) - int(start_pos))
+
 transfer_points = load_transfer_points()
 line_positions = load_line_positions()
 
@@ -47,7 +54,7 @@ line_positions = load_line_positions()
 # print "Metro Center line positions", line_positions['Metro Center']
 # print "Rosslyn lines: ", get_station_lines(line_positions['Rosslyn'])
 
-def find_transfer_route(start_station, end_station):
+def find_transfer_route(start_station, end_station, transfer_penalty=1):
     print "start station: ", start_station
     print "end station: ", end_station
 
@@ -62,26 +69,49 @@ def find_transfer_route(start_station, end_station):
     if (shared_lines):
         #select a shared line arbitrarily to use
         used_line = shared_lines.pop()
-        return {'lines':[used_line],'transfers':[]}
+        distance = number_of_stops(start_station,end_station,used_line,line_positions)
+        return {'lines':[used_line],'transfers':[],'distance':distance}
 
     # get list of possible transfer points based on line overlap
-    direct_transfer_points = []
-    for point in transfer_points.keys():
-        point_lines = transfer_points[point]
-        if (point_lines.intersection(start_station_lines) and point_lines.intersection(end_station_lines)):
-            direct_transfer_points.append(point)
-    print "direct transfer points: ", direct_transfer_points
+    routes = []
+    direct_transfer_distances = {}
 
-    # get minimum distance transfer point
+    for xfer_point in transfer_points.keys():
+        # find shared lines between (start, xfer), and (xver, end)
+        point_lines = transfer_points[xfer_point]
+        shared_lines_start = point_lines.intersection(start_station_lines)
+        shared_lines_end = point_lines.intersection(end_station_lines)
 
+        # if transfer point is valid, find the distance (total stops) used
+        if (shared_lines_start and shared_lines_end):
+            start_line = shared_lines_start.pop()
+            end_line = shared_lines_end.pop()
+            first_distance = number_of_stops(start_station=start_station,end_station=xfer_point,line=start_line,line_positions=line_positions)
+            second_distance = number_of_stops(start_station=xfer_point,end_station=end_station,line=end_line,line_positions=line_positions)
+            total_distance = first_distance + second_distance
+            direct_transfer_distances[xfer_point] = total_distance
+            routes.append({'lines':[start_line,end_line], 'transfers':xfer_point, 'distance': total_distance})
+
+    print "direct transfer distances: ", direct_transfer_distances
+    print "routes: "
+    for route in routes:
+        print route
 
     # try any 2-transfer routes, w/ penalty for extra transfer
 
-    return "who knows?"
+
+    # find best route of those listed
+    sorted_routes = sorted(routes, key=lambda x: x['distance'])
+
+    return sorted_routes[0]
 
 
-# best = find_transfer_route('Cleveland Park', 'Anacostia')
+best = find_transfer_route('Cleveland Park', 'Anacostia')
 # best = find_transfer_route('Cleveland Park', 'Rosslyn')
-best = find_transfer_route('Cleveland Park', 'Metro Center')
+# best = find_transfer_route('Cleveland Park', 'Metro Center')
 
-print best
+print "best: ", best
+
+dist = number_of_stops(start_station='Cleveland Park',end_station='Metro Center',line='Red',line_positions=line_positions)
+
+print dist
