@@ -11,7 +11,7 @@ import collections
 #         self.distance = distance
 #         self.direction = direction
 
-sat_morning_file = "../data/2014_Sat_Morn.csv"
+sat_morning_file = "../data/2014_Sat_Morn_Sample.csv"
 entry_station_header,exit_station_header,avg_ridership_header = "Ent Station","Ext Station","AvgRidership"
 
 # {transfer_tuple: count}
@@ -37,7 +37,7 @@ trans1 = tf.Transfer('Rosslyn','Blue','pos','Orange','neg')
 print "trans1 ridership: ", transfer_counts[trans1.get_tuple()]
 
 # save results to csv
-output_filename = "../data/2014_Sat_Morn_Transfers.csv"
+output_filename = "../data/2014_Sat_Morn_Sample_Transfers.csv"
 with open(output_filename, 'wb') as outputcsv:
     writer = csv.writer(outputcsv, delimiter=",")
     writer.writerow(['Station','Entry_Line','Entry_Dir','Exit_Line','Exit_Dir','Avg_Ridership'])
