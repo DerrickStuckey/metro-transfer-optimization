@@ -20,7 +20,12 @@ import transfer_finder as tf
 best = tf.find_transfer_route('Franconia-Springfield','Federal Center SW')
 
 # print "best route: ", best
-print "best route: ", best.lines, best.directions, best.transfers, best.total_distance
+print "best route: ", best.lines, best.directions, best.transfer_stations, best.total_distance
+
+print "route transfers:"
+for transfer in best.get_transfers():
+    # print transfer.station, transfer.entry_line, transfer.exit_line
+    print transfer.get_tuple()
 
 # metrics = get_trip_metrics(start_station='Cleveland Park',end_station='Metro Center',line='Red',line_positions=line_positions)
 #

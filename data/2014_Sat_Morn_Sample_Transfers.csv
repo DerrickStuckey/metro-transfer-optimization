@@ -1,0 +1,4 @@
+Station,Entry_Line,Entry_Dir,Exit_Line,Exit_Dir,Avg_Ridership
+Rosslyn,Blue,neg,Orange,neg,1.5
+Fort Totten,Green,neg,Red,neg,8.5
+Rosslyn,Blue,pos,Orange,neg,9.0
