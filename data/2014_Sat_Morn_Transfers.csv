@@ -1,0 +1,87 @@
+Station,Entry_Line,Entry_Dir,Exit_Line,Exit_Dir,Avg_Ridership
+Metro Center,Red,pos,Orange,pos,90.0
+King Street,Yellow,neg,Blue,neg,460.75
+Gallery Place-Chinatown,Yellow,pos,Red,neg,1870.25
+L'Enfant Plaza,Green,pos,Silver,neg,199.0
+L'Enfant Plaza,Orange,neg,Green,neg,159.75
+Fort Totten,Green,neg,Red,neg,2554.5
+Gallery Place-Chinatown,Red,pos,Yellow,neg,792.75
+Gallery Place-Chinatown,Green,pos,Red,pos,1192.75
+Gallery Place-Chinatown,Green,neg,Red,neg,1573.0
+Gallery Place-Chinatown,Red,neg,Yellow,neg,439.75
+Metro Center,Red,neg,Silver,neg,435.0
+Metro Center,Red,neg,Blue,neg,2212.25
+L'Enfant Plaza,Blue,pos,Green,neg,59.5
+Rosslyn,Blue,pos,Silver,neg,238.0
+Rosslyn,Silver,pos,Blue,neg,362.25
+Metro Center,Silver,pos,Red,pos,371.75
+L'Enfant Plaza,Green,neg,Blue,pos,1176.25
+East Falls Church,Orange,pos,Silver,neg,97.5
+L'Enfant Plaza,Silver,pos,Green,neg,31.5
+Metro Center,Red,pos,Orange,neg,392.25
+L'Enfant Plaza,Blue,neg,Green,neg,168.5
+Gallery Place-Chinatown,Yellow,pos,Red,pos,854.0
+Metro Center,Red,pos,Silver,neg,142.75
+Rosslyn,Blue,neg,Orange,neg,40.75
+L'Enfant Plaza,Blue,neg,Yellow,neg,818.0
+Metro Center,Orange,pos,Red,neg,750.75
+Metro Center,Orange,neg,Red,neg,551.5
+King Street,Blue,pos,Yellow,neg,36.75
+Stadium-Armory,Orange,neg,Blue,pos,94.5
+Metro Center,Blue,pos,Red,pos,546.25
+L'Enfant Plaza,Green,pos,Blue,pos,307.0
+Rosslyn,Silver,pos,Orange,pos,19.25
+L'Enfant Plaza,Green,pos,Orange,neg,400.25
+Fort Totten,Green,pos,Red,neg,372.0
+L'Enfant Plaza,Yellow,pos,Green,neg,447.0
+Fort Totten,Green,neg,Yellow,neg,90.75
+King Street,Blue,pos,Yellow,pos,1423.25
+East Falls Church,Silver,pos,Orange,neg,51.25
+Metro Center,Blue,neg,Red,neg,1017.25
+Gallery Place-Chinatown,Green,pos,Red,neg,1982.75
+L'Enfant Plaza,Yellow,pos,Blue,pos,1042.25
+Metro Center,Red,pos,Blue,neg,747.0
+Fort Totten,Red,pos,Green,neg,166.0
+Metro Center,Orange,pos,Red,pos,1185.5
+L'Enfant Plaza,Blue,pos,Green,pos,2.5
+L'Enfant Plaza,Green,pos,Yellow,neg,1457.5
+Rosslyn,Blue,pos,Orange,neg,658.0
+Stadium-Armory,Blue,neg,Orange,pos,115.75
+Fort Totten,Red,neg,Yellow,neg,381.75
+Gallery Place-Chinatown,Red,pos,Green,pos,422.0
+Rosslyn,Orange,pos,Blue,pos,14.75
+Fort Totten,Red,neg,Green,pos,217.25
+L'Enfant Plaza,Green,pos,Blue,neg,859.75
+L'Enfant Plaza,Green,pos,Orange,pos,210.75
+Fort Totten,Green,pos,Red,pos,750.5
+Rosslyn,Orange,neg,Silver,neg,80.5
+L'Enfant Plaza,Orange,neg,Green,pos,698.5
+Fort Totten,Green,neg,Red,pos,311.5
+Gallery Place-Chinatown,Red,neg,Green,pos,121.5
+King Street,Blue,neg,Yellow,neg,76.5
+Gallery Place-Chinatown,Red,pos,Green,neg,347.0
+King Street,Yellow,pos,Blue,pos,664.0
+Fort Totten,Yellow,pos,Red,pos,172.75
+Metro Center,Blue,pos,Red,neg,246.0
+L'Enfant Plaza,Yellow,pos,Blue,neg,792.5
+Fort Totten,Red,pos,Green,pos,530.5
+Metro Center,Red,pos,Blue,pos,977.75
+Metro Center,Silver,pos,Red,neg,186.25
+L'Enfant Plaza,Blue,pos,Yellow,neg,19.5
+Metro Center,Blue,neg,Red,pos,19.0
+Rosslyn,Orange,pos,Blue,neg,1171.25
+Fort Totten,Red,neg,Green,neg,855.0
+Pentagon,Blue,neg,Yellow,pos,1233.5
+Metro Center,Red,neg,Blue,pos,303.25
+L'Enfant Plaza,Yellow,pos,Orange,pos,129.25
+Pentagon,Yellow,neg,Blue,pos,1486.25
+Fort Totten,Yellow,pos,Green,pos,35.75
+L'Enfant Plaza,Orange,neg,Yellow,neg,382.5
+Metro Center,Red,neg,Orange,neg,1044.0
+Gallery Place-Chinatown,Red,neg,Green,neg,469.75
+L'Enfant Plaza,Orange,pos,Green,neg,118.5
+L'Enfant Plaza,Green,neg,Blue,neg,90.25
+L'Enfant Plaza,Green,neg,Orange,pos,302.75
+King Street,Yellow,pos,Blue,neg,57.75
+Gallery Place-Chinatown,Green,neg,Red,pos,153.75
+L'Enfant Plaza,Blue,neg,Green,pos,1385.5

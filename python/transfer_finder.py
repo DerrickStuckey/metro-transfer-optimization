@@ -2,12 +2,36 @@
 
 import csv
 
+class Transfer:
+    def __init__(self, station, entry_line, entry_dir, exit_line, exit_dir):
+        self.station = station
+        self.entry_line = entry_line
+        self.entry_dir = entry_dir
+        self.exit_line = exit_line
+        self.exit_dir = exit_dir
+
+    def get_tuple(self):
+        return (self.station, self.entry_line, self.entry_dir, self.exit_line, self.exit_dir)
+
 class Route:
-    def __init__(self, lines, directions, transfers, total_distance):
+    def __init__(self, lines, directions, transfer_stations, total_distance):
         self.lines = lines
         self.directions = directions
-        self.transfers = transfers
+        self.transfer_stations = transfer_stations
         self.total_distance = total_distance
+
+    def get_transfers(self):
+        if self.transfer_stations:
+            pre_xfer_lines = self.lines[0:len(self.lines)-1]
+            post_xfer_lines = self.lines[1:len(self.lines)]
+            pre_xfer_dirs = self.directions[0:len(self.directions)-1]
+            post_xfer_dirs = self.directions[1:len(self.directions)]
+            transfers_zipped = zip(self.transfer_stations, pre_xfer_lines, pre_xfer_dirs, post_xfer_lines, post_xfer_dirs)
+            transfers = [Transfer(x[0],x[1],x[2],x[3],x[4]) for x in transfers_zipped]
+            return transfers
+        else:
+            return []
+
 
 class LineTrip:
     def __init__(self, distance, direction):
@@ -84,7 +108,7 @@ def find_transfer_route(start_station, end_station, transfer_penalty=1):
     for used_line in shared_lines:
         # for each feasible single-line route, compute all the route details and append it to the list
         trip_metrics = get_trip_metrics(start_station,end_station,used_line,__line_positions)
-        routes.append(Route(lines=[used_line],transfers=[],total_distance=trip_metrics.distance,
+        routes.append(Route(lines=[used_line],transfer_stations=[],total_distance=trip_metrics.distance,
                             directions=[trip_metrics.direction]))
 
     # try all feasible 1-transfer routes
@@ -104,7 +128,7 @@ def find_transfer_route(start_station, end_station, transfer_penalty=1):
                                                          line=end_line,line_positions=__line_positions)
                 total_distance = first_trip_metrics.distance + second_trip_metrics.distance + transfer_penalty
                 directions = [first_trip_metrics.direction,second_trip_metrics.direction]
-                routes.append(Route(lines=[start_line,end_line],transfers=xfer_point,
+                routes.append(Route(lines=[start_line,end_line],transfer_stations=[xfer_point],
                                     total_distance=total_distance,directions=directions))
 
     # print "direct routes: "
@@ -131,7 +155,7 @@ def find_transfer_route(start_station, end_station, transfer_penalty=1):
                         total_distance = start_trip_metrics.distance + mid_trip_metrics.distance + \
                                          end_trip_metrics.distance + 2*transfer_penalty
                         directions = [start_trip_metrics.direction, mid_trip_metrics.direction, end_trip_metrics.direction]
-                        routes.append(Route(lines=[start_line,mid_line,end_line],transfers=[xfer_point_1,xfer_point_2],
+                        routes.append(Route(lines=[start_line,mid_line,end_line],transfer_stations=[xfer_point_1,xfer_point_2],
                                             total_distance=total_distance,directions=directions))
 
     # print "all routes: "
