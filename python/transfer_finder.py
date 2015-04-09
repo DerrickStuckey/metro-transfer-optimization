@@ -40,13 +40,16 @@ def get_station_lines(station_line_positions):
     lines = [line for line in station_line_positions.keys() if station_line_positions[line]!='']
     return set(lines)
 
-def number_of_stops(start_station, end_station, line, line_positions):
+#TODO define TripMetrics class to be return value
+def get_trip_metrics(start_station, end_station, line, line_positions):
     try:
         start_pos = line_positions[start_station][line]
         end_pos = line_positions[end_station][line]
         # print "start_pos: ", start_pos
         # print "end_pos: ", end_pos
-        return abs(int(end_pos) - int(start_pos))
+        distance = abs(int(end_pos) - int(start_pos))
+        direction = 'pos' if (int(end_pos) >= int(start_pos)) else 'neg'
+        return {'distance':distance,'direction':direction}
     except:
         print "number_of_stops() error for: ", start_station, " -> ", end_station, " ", "; line=", line
 
@@ -57,6 +60,7 @@ line_positions = load_line_positions()
 # print "Metro Center line positions", line_positions['Metro Center']
 # print "Rosslyn lines: ", get_station_lines(line_positions['Rosslyn'])
 
+#TODO define Route class to be return value
 def find_transfer_route(start_station, end_station, transfer_penalty=1):
     # print "start station: ", start_station
     # print "end station: ", end_station
@@ -72,12 +76,12 @@ def find_transfer_route(start_station, end_station, transfer_penalty=1):
     if (shared_lines):
         #select a shared line arbitrarily to use
         used_line = shared_lines.pop()
-        distance = number_of_stops(start_station,end_station,used_line,line_positions)
-        return {'lines':[used_line],'transfers':[],'distance':distance}
+        trip_metrics = get_trip_metrics(start_station,end_station,used_line,line_positions)
+        return {'lines':[used_line],'transfers':[],'total_distance':trip_metrics['distance'],
+                'directions':[trip_metrics['direction']]}
 
     # get list of possible transfer points based on line overlap
     routes = []
-    direct_transfer_distances = {}
 
     for xfer_point in transfer_points.keys():
         # find shared lines between (start, xfer), and (xver, end)
@@ -89,13 +93,17 @@ def find_transfer_route(start_station, end_station, transfer_penalty=1):
         if (shared_lines_start and shared_lines_end):
             start_line = shared_lines_start.pop()
             end_line = shared_lines_end.pop()
-            first_distance = number_of_stops(start_station=start_station,end_station=xfer_point,line=start_line,line_positions=line_positions)
-            second_distance = number_of_stops(start_station=xfer_point,end_station=end_station,line=end_line,line_positions=line_positions)
+            first_trip_metrics = get_trip_metrics(start_station=start_station,end_station=xfer_point,
+                                                  line=start_line,line_positions=line_positions)
+            second_trip_metrics = get_trip_metrics(start_station=xfer_point,end_station=end_station,
+                                                     line=end_line,line_positions=line_positions)
+            first_distance = first_trip_metrics['distance']
+            second_distance = second_trip_metrics['distance']
             total_distance = first_distance + second_distance
-            direct_transfer_distances[xfer_point] = total_distance
-            routes.append({'lines':[start_line,end_line], 'transfers':xfer_point, 'distance': total_distance})
+            directions = [first_trip_metrics['direction'],second_trip_metrics['direction']]
+            routes.append({'lines':[start_line,end_line], 'transfers':xfer_point,
+                           'total_distance': total_distance, 'directions':directions})
 
-    # print "direct transfer distances: ", direct_transfer_distances
     # print "direct routes: "
     # for route in routes:
     #     print route
@@ -114,19 +122,23 @@ def find_transfer_route(start_station, end_station, transfer_penalty=1):
                 start_line = shared_lines_start.pop()
                 mid_line = shared_lines_mid.pop()
                 end_line = shared_lines_end.pop()
-                start_distance = number_of_stops(start_station, xfer_point_1, start_line, line_positions)
-                mid_distance = number_of_stops(xfer_point_1, xfer_point_2, mid_line, line_positions)
-                end_distance = number_of_stops(xfer_point_2, end_station, end_line, line_positions)
+                start_trip_metrics = get_trip_metrics(start_station, xfer_point_1, start_line, line_positions)
+                mid_trip_metrics = get_trip_metrics(xfer_point_1, xfer_point_2, mid_line, line_positions)
+                end_trip_metrics = get_trip_metrics(xfer_point_2, end_station, end_line, line_positions)
+                start_distance = start_trip_metrics['distance']
+                mid_distance = mid_trip_metrics['distance']
+                end_distance = end_trip_metrics['distance']
+                directions = [start_trip_metrics['direction'],mid_trip_metrics['direction'],end_trip_metrics['direction']]
                 total_distance = start_distance + mid_distance + end_distance + transfer_penalty
                 routes.append({'lines':[start_line,mid_line,end_line],'transfers':[xfer_point_1,xfer_point_2],
-                               'distance':total_distance})
+                               'total_distance':total_distance,'directions':directions})
 
     # print "all routes: "
     # for route in routes:
     #     print route
 
     # find best route of those listed
-    sorted_routes = sorted(routes, key=lambda x: x['distance'])
+    sorted_routes = sorted(routes, key=lambda x: x['total_distance'])
 
     return sorted_routes[0]
 
@@ -134,12 +146,12 @@ def find_transfer_route(start_station, end_station, transfer_penalty=1):
 # best = find_transfer_route('Cleveland Park', 'Anacostia')
 # best = find_transfer_route('Cleveland Park', 'Rosslyn')
 # best = find_transfer_route('Cleveland Park', 'Metro Center')
-# best = find_transfer_route('Huntington', 'Vienna')
+best = find_transfer_route('Huntington', 'Vienna')
 # best = find_transfer_route('Waterfront', 'Union Station')
-best = find_transfer_route('New Carrollton', 'Judiciary Square')
+# best = find_transfer_route('New Carrollton', 'Judiciary Square')
 
 print "best route: ", best
 
-dist = number_of_stops(start_station='Cleveland Park',end_station='Metro Center',line='Red',line_positions=line_positions)
-
-print "distance: ", dist
+# metrics = get_trip_metrics(start_station='Cleveland Park',end_station='Metro Center',line='Red',line_positions=line_positions)
+#
+# print "distance: ", metrics['distance']
