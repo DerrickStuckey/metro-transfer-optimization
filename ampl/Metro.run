@@ -1,0 +1,14 @@
+## Metro Transfer Optimization Model
+
+reset;
+reset;
+
+model Metro.mod;
+data Metro_Sat_Morn_Sample.dat;
+
+option solver cplex;
+#option relax_integrality 1;
+solve;
+
+display s;
+display k;
