@@ -4,7 +4,8 @@ reset;
 reset;
 
 model Metro.mod;
-data Metro_Sat_Morn_Sample.dat;
+#data Metro_Sat_Morn_Sample.dat;
+data Metro_Sat_Morn_Full.dat;
 
 option solver cplex;
 #option relax_integrality 1;
@@ -13,12 +14,12 @@ solve;
 display s;
 #display k;
 
-display TRAFFIC;
+#display TRAFFIC;
 
 param ArrivalTimes{I,L};
 let {i in I, l in L} ArrivalTimes[i,l] := s[l]+TIME_TO[l,i];
-display ArrivalTimes;
+#display ArrivalTimes;
 
 param ObjectiveTerms{I,L,L};
 let {i in I, l in L, m in L} ObjectiveTerms[i,l,m] := TRAFFIC[i,l,m]*(s[m]+TIME_TO[m,i]-s[l]-TIME_TO[l,i] - k[i,l,m]*INTERVAL - TRANSFER_TIME);
-display ObjectiveTerms;
+#display ObjectiveTerms;

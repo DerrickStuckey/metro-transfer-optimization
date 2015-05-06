@@ -1,0 +1,155 @@
+## Metro Transfer Optimization Model
+## Traffic data for Saturday morning October 2014
+## Test dataset for Blue, Orange Lines and Rosslyn station only
+
+#set I := Rosslyn;
+#set L := Blue_pos Blue_neg Orange_pos Orange_neg;
+
+set I := Metro_Center King_Street Gallery_Place-Chinatown LEnfant_Plaza Fort_Totten Rosslyn East_Falls_Church Stadium-Armory Pentagon;
+set L := Green_pos	Red_pos	Yellow_pos	Blue_pos	Orange_pos	Silver_pos	Green_neg	Red_neg	Yellow_neg	Blue_neg	Orange_neg	Silver_neg;
+
+param TIME_TO :
+			Metro_Center	King_Street	Gallery_Place-Chinatown	LEnfant_Plaza	Fort_Totten	Rosslyn	East_Falls_Church	Stadium-Armory	Pentagon :=
+Green_pos	0	0	22	19	35	0	0	0	0
+Red_pos		34	0	36	0	22	0	0	0	0
+Yellow_pos	0	3	0	22	0	0	0	0	15
+Blue_pos	31	11	0	36	0	24	0	45	23
+Orange_pos	29	0	0	34	0	22	10	30	0
+Silver_pos	39	0	0	44	0	32	22	53	0
+Green_neg	0	0	25	28	12	0	0	0	0
+Red_neg		27	0	25	0	14	0	0	0	0
+Yellow_neg	0	48	40	31	10	0	0	0	36
+Blue_neg	23	37	0	18	0	30	0	9	35
+Orange_neg	28	0	0	23	0	35	46	14	0
+Silver_neg	30	0	0	25	0	37	48	16	0;
+
+#param TIME_TO :
+#			Rosslyn :=
+#Blue_pos	0
+#Blue_neg	0	
+#Orange_pos	0 
+#Orange_neg	0;
+
+param INTERVAL := 12;
+
+param TRANSFER_TIME := 1;
+
+param TRAFFIC :=
+	[Metro_Center,*,*]:		Blue_pos 	Blue_neg 	Green_pos 	Green_neg 	Orange_pos 	Orange_neg 	Red_pos 	Red_neg 	Silver_pos 	Silver_neg 	Yellow_pos 	Yellow_neg 	:=
+		Blue_pos 		0 			0 			0 			0 			0 			0 			546.25 			246.0 			0 			0 			0 			0 			
+		Blue_neg 		0 			0 			0 			0 			0 			0 			19.0 			1017.25 			0 			0 			0 			0 			
+		Green_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Green_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Orange_pos 		0 			0 			0 			0 			0 			0 			1185.5 			750.75 			0 			0 			0 			0 			
+		Orange_neg 		0 			0 			0 			0 			0 			0 			0 			551.5 			0 			0 			0 			0 			
+		Red_pos 		977.75 			747.0 			0 			0 			90.0 			392.25 			0 			0 			0 			142.75 			0 			0 			
+		Red_neg 		303.25 			2212.25 			0 			0 			0 			1044.0 			0 			0 			0 			435.0 			0 			0 			
+		Silver_pos 		0 			0 			0 			0 			0 			0 			371.75 			186.25 			0 			0 			0 			0 			
+		Silver_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Yellow_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Yellow_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+	[King_Street,*,*]:		Blue_pos 	Blue_neg 	Green_pos 	Green_neg 	Orange_pos 	Orange_neg 	Red_pos 	Red_neg 	Silver_pos 	Silver_neg 	Yellow_pos 	Yellow_neg 	:=
+		Blue_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			1423.25 			36.75 			
+		Blue_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			76.5 			
+		Green_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Green_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Orange_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Orange_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Red_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Red_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Silver_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Silver_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Yellow_pos 		664.0 			57.75 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Yellow_neg 		0 			460.75 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+	[Gallery_Place-Chinatown,*,*]:		Blue_pos 	Blue_neg 	Green_pos 	Green_neg 	Orange_pos 	Orange_neg 	Red_pos 	Red_neg 	Silver_pos 	Silver_neg 	Yellow_pos 	Yellow_neg 	:=
+		Blue_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Blue_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Green_pos 		0 			0 			0 			0 			0 			0 			1192.75 			1982.75 			0 			0 			0 			0 			
+		Green_neg 		0 			0 			0 			0 			0 			0 			153.75 			1573.0 			0 			0 			0 			0 			
+		Orange_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Orange_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Red_pos 		0 			0 			422.0 			347.0 			0 			0 			0 			0 			0 			0 			0 			792.75 			
+		Red_neg 		0 			0 			121.5 			469.75 			0 			0 			0 			0 			0 			0 			0 			439.75 			
+		Silver_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Silver_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Yellow_pos 		0 			0 			0 			0 			0 			0 			854.0 			1870.25 			0 			0 			0 			0 			
+		Yellow_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+	[LEnfant_Plaza,*,*]:		Blue_pos 	Blue_neg 	Green_pos 	Green_neg 	Orange_pos 	Orange_neg 	Red_pos 	Red_neg 	Silver_pos 	Silver_neg 	Yellow_pos 	Yellow_neg 	:=
+		Blue_pos 		0 			0 			2.5 			59.5 			0 			0 			0 			0 			0 			0 			0 			19.5 			
+		Blue_neg 		0 			0 			1385.5 			168.5 			0 			0 			0 			0 			0 			0 			0 			818.0 			
+		Green_pos 		307.0 			859.75 			0 			0 			210.75 			400.25 			0 			0 			0 			199.0 			0 			1457.5 			
+		Green_neg 		1176.25 			90.25 			0 			0 			302.75 			0 			0 			0 			0 			0 			0 			0 			
+		Orange_pos 		0 			0 			0 			118.5 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Orange_neg 		0 			0 			698.5 			159.75 			0 			0 			0 			0 			0 			0 			0 			382.5 			
+		Red_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Red_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Silver_pos 		0 			0 			0 			31.5 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Silver_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Yellow_pos 		1042.25 			792.5 			0 			447.0 			129.25 			0 			0 			0 			0 			0 			0 			0 			
+		Yellow_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+	[Fort_Totten,*,*]:		Blue_pos 	Blue_neg 	Green_pos 	Green_neg 	Orange_pos 	Orange_neg 	Red_pos 	Red_neg 	Silver_pos 	Silver_neg 	Yellow_pos 	Yellow_neg 	:=
+		Blue_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Blue_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Green_pos 		0 			0 			0 			0 			0 			0 			750.5 			372.0 			0 			0 			0 			0 			
+		Green_neg 		0 			0 			0 			0 			0 			0 			311.5 			2554.5 			0 			0 			0 			90.75 			
+		Orange_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Orange_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Red_pos 		0 			0 			530.5 			166.0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Red_neg 		0 			0 			217.25 			855.0 			0 			0 			0 			0 			0 			0 			0 			381.75 			
+		Silver_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Silver_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Yellow_pos 		0 			0 			35.75 			0 			0 			0 			172.75 			0 			0 			0 			0 			0 			
+		Yellow_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+	[Rosslyn,*,*]:		Blue_pos 	Blue_neg 	Green_pos 	Green_neg 	Orange_pos 	Orange_neg 	Red_pos 	Red_neg 	Silver_pos 	Silver_neg 	Yellow_pos 	Yellow_neg 	:=
+		Blue_pos 		0 			0 			0 			0 			0 			658.0 			0 			0 			0 			238.0 			0 			0 			
+		Blue_neg 		0 			0 			0 			0 			0 			40.75 			0 			0 			0 			0 			0 			0 			
+		Green_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Green_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Orange_pos 		14.75 			1171.25 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Orange_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			80.5 			0 			0 			
+		Red_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Red_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Silver_pos 		0 			362.25 			0 			0 			19.25 			0 			0 			0 			0 			0 			0 			0 			
+		Silver_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Yellow_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Yellow_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+	[East_Falls_Church,*,*]:		Blue_pos 	Blue_neg 	Green_pos 	Green_neg 	Orange_pos 	Orange_neg 	Red_pos 	Red_neg 	Silver_pos 	Silver_neg 	Yellow_pos 	Yellow_neg 	:=
+		Blue_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Blue_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Green_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Green_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Orange_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			97.5 			0 			0 			
+		Orange_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Red_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Red_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Silver_pos 		0 			0 			0 			0 			0 			51.25 			0 			0 			0 			0 			0 			0 			
+		Silver_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Yellow_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Yellow_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+	[Stadium-Armory,*,*]:		Blue_pos 	Blue_neg 	Green_pos 	Green_neg 	Orange_pos 	Orange_neg 	Red_pos 	Red_neg 	Silver_pos 	Silver_neg 	Yellow_pos 	Yellow_neg 	:=
+		Blue_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Blue_neg 		0 			0 			0 			0 			115.75 			0 			0 			0 			0 			0 			0 			0 			
+		Green_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Green_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Orange_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Orange_neg 		94.5 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Red_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Red_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Silver_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Silver_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Yellow_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Yellow_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+	[Pentagon,*,*]:		Blue_pos 	Blue_neg 	Green_pos 	Green_neg 	Orange_pos 	Orange_neg 	Red_pos 	Red_neg 	Silver_pos 	Silver_neg 	Yellow_pos 	Yellow_neg 	:=
+		Blue_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Blue_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			1233.5 			0 			
+		Green_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Green_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Orange_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Orange_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Red_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Red_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Silver_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Silver_neg 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Yellow_pos 		0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+		Yellow_neg 		1486.25 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			0 			
+;
