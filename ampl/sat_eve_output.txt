@@ -1,0 +1,20 @@
+CPLEX 12.6.1.0: optimal integer solution within mipgap or absmipgap; objective 94363.25
+39645 MIP simplex iterations
+3151 branch-and-bound nodes
+absmipgap = 2.88583, relmipgap = 3.05822e-05
+No basis.
+s [*] :=
+  Blue_neg  11
+  Blue_pos   4
+ Green_neg   5
+ Green_pos   5
+Orange_neg   9
+Orange_pos   6
+   Red_neg   9
+   Red_pos   2
+Silver_neg   7
+Silver_pos   8
+Yellow_neg  11
+Yellow_pos   9
+;
+
