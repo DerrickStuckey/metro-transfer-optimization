@@ -5,7 +5,8 @@ reset;
 
 model Metro.mod;
 #data Metro_Sat_Morn_Sample.dat;
-data Metro_Sat_Morn_Full.dat;
+#data Metro_Sat_Morn_Full.dat;
+data Metro_Sat_Eve_Full.dat;
 
 option solver cplex;
 #option relax_integrality 1;

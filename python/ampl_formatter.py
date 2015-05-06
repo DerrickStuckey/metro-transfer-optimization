@@ -24,7 +24,8 @@ for line in line_keys:
 
 print line_dir_keys
 
-transfer_filename = "../data/2014_Sat_Morn_Transfers.csv"
+#transfer_filename = "../data/2014_Sat_Morn_Transfers.csv"
+transfer_filename = "../data/2014_Sat_Eve_Transfers.csv"
 
 csv_headers = ['Station','Entry_Line','Entry_Dir','Exit_Line','Exit_Dir','Avg_Ridership']
 
