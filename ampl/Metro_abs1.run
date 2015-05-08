@@ -5,7 +5,7 @@ reset;
 
 model Metro_abs1.mod;
 #data Metro_Sat_Morn_Sample.dat;
-data Metro_Sat_Morn_Full.dat;
+data Metro_Sat_Morn_Full_abs1.dat;
 #data Metro_Sat_Eve_Full.dat;
 
 option solver cplex;

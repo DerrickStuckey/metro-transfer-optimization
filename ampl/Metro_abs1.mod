@@ -35,7 +35,7 @@ subject to Abs1{l in L, m in L}:
 b[l,m] >= s[m]-s[l]-OFFSET[l,m];
 
 subject to Abs2{l in L, m in L}:
-b[l,m] >= -(s[m]-s[l]-OFFSET[l,m]);
+b[l,m] >= -(s[m]-s[l]+OFFSET[l,m]);
 
 subject to SharedLines{l in L, m in L}:
 b[l,m] >= SHARE[l,m];
