@@ -1,0 +1,23 @@
+CPLEX 12.6.1.0: optimal (non-)integer solution within mipgap or absmipgap; objective 517860.7489
+34349 MIP simplex iterations
+3330 branch-and-bound nodes
+absmipgap = 32.9, relmipgap = 6.35305e-05
+No basis.
+9 integer variables rounded (maxerr = 8.33424e-07).
+Assigning integrality = 4e-07 might help.
+Currently integrality = 1e-05.
+s [*] :=
+  Blue_neg   9
+  Blue_pos   4
+ Green_neg   9
+ Green_pos  10
+Orange_neg   9
+Orange_pos   4
+   Red_neg  11
+   Red_pos   0
+Silver_neg   9
+Silver_pos   4
+Yellow_neg   9
+Yellow_pos  10
+;
+
