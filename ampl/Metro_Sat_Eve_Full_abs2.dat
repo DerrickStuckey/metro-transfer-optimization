@@ -8,13 +8,13 @@ param TIME_TO :
 			Metro_Center	King_Street	Gallery_Place-Chinatown	LEnfant_Plaza	Fort_Totten	Rosslyn	East_Falls_Church	Stadium-Armory	Pentagon :=
 Green_pos	0	0	22	19	35	0	0	0	0
 Red_pos		34	0	36	0	22	0	0	0	0
-Yellow_pos	0	3	0	22	0	0	0	0	15
+Yellow_pos	0	3	13	22	0	0	0	0	15
 Blue_pos	31	11	0	36	0	24	0	45	23
 Orange_pos	29	0	0	34	0	22	10	30	0
 Silver_pos	39	0	0	44	0	32	22	53	0
 Green_neg	0	0	25	28	12	0	0	0	0
 Red_neg		27	0	25	0	14	0	0	0	0
-Yellow_neg	0	48	40	31	10	0	0	0	36
+Yellow_neg	0	48	40	31	10	0	0	0	38
 Blue_neg	23	37	0	18	0	30	0	9	35
 Orange_neg	28	0	0	23	0	35	46	14	0
 Silver_neg	30	0	0	25	0	37	48	16	0;
@@ -37,7 +37,7 @@ Yellow_neg	0	0	0	0	0	0	0	0	0	0	0	0;
 param OFFSET: 	
 			Blue_pos 	Blue_neg 	Green_pos 	Green_neg 	Orange_pos 	Orange_neg 	Red_pos 	Red_neg 	Silver_pos 	Silver_neg 	Yellow_pos 	Yellow_neg :=
 Blue_pos 	0	0	0	0	2	0	0	0	-8	0	8	0
-Blue_neg 	0	0	0	0	0	-5	0	0	0	-7	0	-1
+Blue_neg 	0	0	0	0	0	-5	0	0	0	-7	0	-3
 Green_pos 	0	0	0	0	0	0	0	0	0	0	-3	0
 Green_neg 	0	0	0	0	0	0	0	0	0	0	0	-3
 Orange_pos 	0	0	0	0	0	0	0	0	-10	0	0	0
