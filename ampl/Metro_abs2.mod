@@ -32,7 +32,7 @@ k[i,l,m]*INTERVAL <= (s[m] + TIME_TO[m,i] - s[l] - TIME_TO[l,i] - TRANSFER_TIME)
 
 #Shared Lines requires two constraints: for positive, negative cases
 subject to SharedLines1{l in L, m in L}:
-(s[m]-s[l]+OFFSET[l,m]) + M*b[l,m] >= SHARE[l,m];
+(s[m]-s[l]-OFFSET[l,m]) + M*b[l,m] >= SHARE[l,m];
 
 subject to SharedLines2{l in L, m in L}:
--(s[m]-s[l]+OFFSET[l,m]) + M*(1-b[l,m]) >= SHARE[l,m];
+-(s[m]-s[l]-OFFSET[l,m]) + M*(1-b[l,m]) >= SHARE[l,m];
